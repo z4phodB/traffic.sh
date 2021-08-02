@@ -49,7 +49,6 @@ function get_bytes {
           TSCALE="mbps"
         fi
         RXBYTES=`printf "%03.2f" $RXBYTES;`
-        TXBYTES=`echo "scale=4;($TX-$OLDTX) * 8 / 1024 / 1024 / 5" | bc`
         TXBYTES=`printf "%03.2f" $TXBYTES;`
         printf "\r[\033[0;35m$INT\033[m] `date '+%H:%M:%S %Z %m/%d/%Y'` IN: \033[0;36m$RXBYTES\033[m $RSCALE OUT: \033[0;32m$TXBYTES\033[m $TSCALE"
         get_bytes $RX $TX
