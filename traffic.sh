@@ -5,6 +5,11 @@ INT=$1
 if [ -z $INT ]; then
   printf "No interface specified, using: "
   INT=`ip route | grep ^default | awk '{print $5}' | head -1` #first default route interface
+    if [ -z $INT ]; then
+    INTS=`cat /proc/net/dev | tail -n +3 | awk -F: '{print $1}' | sed -e 's/\ //g' | tr '\n' ' '`
+    printf "Could not determine default gateway, please specific an interface: $INTS"
+    exit
+  fi
   INTS=`cat /proc/net/dev | tail -n +3 | awk -F: '{print $1}' | sed -e 's/\ //g' | tr '\n' ' ' | sed -e "s/$INT //g"`
   printf "\033[0;35m$INT\033[m \033[1;35m[ $INTS]\033[m\n";
 else
